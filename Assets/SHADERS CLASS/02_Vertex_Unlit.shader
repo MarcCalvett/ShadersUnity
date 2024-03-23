@@ -6,7 +6,7 @@ Shader"ENTI/O2_Vertex_Unlit"
         _MainTex ("Main Texture", 2D) = "WHITE" {}
         _Scale ("Scale", float) = 1.0
         _TilingOffset ("Tiling and Offset", vector) = (1.0,1.0,1.0,1.0)
-        _Displacement ("Displacement",float) = 1.0
+        _Displacement ("Displacement",Range (0.0, 0.1)) = 0.01
         _DispTex("Displacement Texture",2D) = "WHITE" {}
     }
     SubShader
@@ -59,24 +59,8 @@ Shader"ENTI/O2_Vertex_Unlit"
                 half4 displacetex = tex2Dlod(_DispTex, float4(worldPos.x * _Time.x, worldPos.y, 0, 0));
                 o.dispTex = displacetex;
                 v.vertex.xyz += _Displacement * v.normal * displacetex;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-    
-                            //normal
-                                        //o.color.xyz = v.normal * 0.5 + 0.5;
-    
-                            //tangent   
-                                        //o.color.xyz = v.tangent * 0.5 + 0.5;
-    
-                            //bitangent
-                            //float3 bitangent = cross(v.normal, v.tangent);
-                            //o.color.xyz = bitangent * 0.5 + 0.5;
-    
-    
-                            //uv
-                           // o.color = float4(v.uv.xy, 0, 0);
-    
-    
-                            //o.color.w = 1.0;
+                o.vertex = UnityObjectToClipPos(v.vertex);    
+                            
                 return o;
             }
 
